@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-status
+  namespace: default
+spec:
+  command: check-mysql-status.rb  -h localhost  -p  "3306" -d "cariq"
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - mysql
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+

@@ -1,0 +1,18 @@
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-port-chatapi
+  namespace: default
+spec:
+  command: check-ports.rb  -p 8449
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - port-web02
+

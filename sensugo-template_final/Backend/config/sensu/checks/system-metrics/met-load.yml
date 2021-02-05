@@ -1,0 +1,21 @@
+---
+type: CheckConfig
+metadata:
+  name: met-load
+  namespace: default
+spec:
+  command: metrics-load.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - load
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+
+

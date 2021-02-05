@@ -1,0 +1,18 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-chrony
+  namespace: default
+spec:
+  command: check-chrony.rb --warn-offset 10 --crit-offset 20
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - chrony
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+

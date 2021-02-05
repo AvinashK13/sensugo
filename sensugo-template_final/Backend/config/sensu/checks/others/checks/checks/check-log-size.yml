@@ -1,0 +1,18 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-log-size
+  namespace: default
+spec:
+   command: check-file-size.rb -f /var/log/mongodb/mongod.log -w 1500000000 -c 1700000000
+   handlers: [email,slack]
+   interval: 10
+   publish: true
+   runtime_assets:
+   - file
+   - sensu-ruby-runtime
+   subscriptions:
+   - mongo
+
+

@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-http-certificate
+  namespace: default
+spec:
+  command: check-https-cert.rb -uhttps://televed.com -w 30 -c 15
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - system-admin
+

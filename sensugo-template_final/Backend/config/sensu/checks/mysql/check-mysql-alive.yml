@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-alive
+  namespace: default
+spec:
+  command: check-mysql-alive.rb  -h localhost  --port 3306  -u root --pass CiQ34358!  -s /var/lib/mysql/mysql.sock
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - mysql
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+

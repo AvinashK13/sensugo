@@ -1,0 +1,18 @@
+---
+version: '2'
+services:
+  influxdb:
+    image: influxdb:1.8.0-alpine
+    hostname: influxdb
+    container_name: influxdb
+    ports:
+    - 8086:8086
+    environment:
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+      - INFLUXDB_DB=sensu
+    volumes:
+     - "./influxdb:/var/lib/influxdb"
+     - "./init.db/init.iql:/docker-entrypoint-initdb.d/init.iql"
+

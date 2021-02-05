@@ -1,0 +1,20 @@
+---
+type: CheckConfig
+metadata:
+  name: met-chrony
+  namespace: default
+spec:
+  command: metrics-chrony.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - chrony
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+

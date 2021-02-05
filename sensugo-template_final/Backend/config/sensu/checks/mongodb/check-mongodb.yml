@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongodb
+  namespace: default
+spec:
+  command: check-mongodb.rb -H address
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - mongodb
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+

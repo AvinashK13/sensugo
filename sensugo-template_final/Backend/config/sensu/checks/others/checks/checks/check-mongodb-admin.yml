@@ -1,0 +1,18 @@
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongodb-admin
+  namespace: default
+spec:
+  command: check-mongodb.rb -H 10.0.1.4
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - mongodb
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo-admin
+

@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-fos-api
+  namespace: default
+spec:
+  command: check-http.rb -u check-http.rb -u https://ilgecu.mycariq.com/Cariq/admin/exporter/download/JobFOSExporter/ByLastHour/abcd1234efgh5678
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - fos
+

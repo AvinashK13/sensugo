@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Televed Server Sensu Notification</title>
+</head>
+<body>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+     <tr>
+       <td align="center" valign="top">
+        <table width="650" border="1" cellpadding="10" cellspacing="0">
+         <tr>
+           <td>State : </td>
+          {{if eq .Check.State "failing" }}
+           <td bgcolor="red">{{ .Check.State }}</td>
+          {{ else }}
+           <td bgcolor="green">{{ .Check.State }}</td>
+          {{ end }}
+         </tr>
+         <tr>
+           <td>Admin GUI: </td>
+           <td> http://13.71.27.110:3000 </td>
+         </tr>
+         <tr>
+           <td> Entity: </td>
+           <td> {{.Entity.Name }}</td>
+         </tr>
+         <tr>
+           <td>Executed: </td>
+           <td>{{(UnixTime .Check.Executed).Format "2 Jan 2006 15:04:05"}}</td>
+        </tr>
+        <tr>
+           <td>Last Ok </td>
+           <td>{{(UnixTime .Check.LastOK).Format "2 Jan 2006 15:04:05"}}</td>
+        </tr>
+        <tr>
+          <td>Address: </td>
+          <td>{{ .Entity.Name }} </td>
+        </tr>
+        <tr>
+          <td>Check Name: </td>
+          <td> {{ .Check.Name }}</td>
+        </tr>
+        <tr>
+          <td>Output: </td>
+          <td>{{.Check.Output}}</td>
+        </tr>
+        <tr>
+          <td>Occurrances: </td>
+          <td>{{ .Check.Occurrences }}</td>
+        </tr>
+       </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+

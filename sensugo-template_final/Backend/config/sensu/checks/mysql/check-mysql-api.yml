@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-api
+  namespace: default
+spec:
+  command: check-http.rb -u https://taecu.mycariq.com/Cariq/tests/ping/mysql -q 'pong'
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+

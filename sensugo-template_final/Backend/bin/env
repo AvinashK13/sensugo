@@ -1,0 +1,20 @@
+#Environemt variable for setupping the sensugo 
+CUSTOMER=televed
+
+#SensGo Admin Login default  
+SENSU_BACKEND_CLUSTER_ADMIN_USERNAME=admin
+SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD=admin
+
+#slack
+SLACK_CHANNEL=test
+SLACK_URL=localhost
+
+#email 
+#default value 
+EMAIL_SENDER=sshukla@mycariq.com
+EMAIL_RECEIPIENT= manish@glistensoft.com
+EMAIL_SMTP_SERVER=10.4.1.11
+EMAIL_USERNAME=sshukla@mycariq.com
+EMAIL_PASSWORD=Glisten2017!
+
+

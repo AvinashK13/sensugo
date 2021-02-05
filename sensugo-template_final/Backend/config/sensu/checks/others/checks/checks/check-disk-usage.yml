@@ -1,0 +1,20 @@
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-disk-usage
+  namespace: default
+spec:
+  command: check-disk-usage.rb -p '(\/var\/lib\/docker|\/run\/docker)'  -w 80 -c 90
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - disk-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+
+

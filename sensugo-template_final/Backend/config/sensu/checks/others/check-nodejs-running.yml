@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-nodejs-running
+  namespace: default
+spec:
+  command: check-ports.rb  -p "49999"
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - nodejs
+

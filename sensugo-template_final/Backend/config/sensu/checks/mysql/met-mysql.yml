@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-mysql
+  namespace: default
+spec:
+  command: metrics-mysql-graphite.rb -h localhost  --port 3306 -S /var/lib/mysql/mysql.sock -u root --pass CiQ34358!
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - mysql
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+

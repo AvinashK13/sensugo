@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-memory-used
+  namespace: default
+spec:
+  command: metrics-memory.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - memory-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

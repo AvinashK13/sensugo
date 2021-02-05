@@ -1,0 +1,20 @@
+---
+type: CheckConfig
+metadata:
+  name: met-mongodb-web02
+  namespace: default
+spec:
+  command: metrics-mongodb.rb -h 10.0.1.6
+  handlers: [email,slack,influx-db]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - mongodb
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo-web02
+
+

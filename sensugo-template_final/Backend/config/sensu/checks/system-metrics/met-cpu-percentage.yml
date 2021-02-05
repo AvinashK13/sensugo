@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-cpu-percentage
+  namespace: default
+spec:
+  command: metrics-cpu-pcnt-usage.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - cpu
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

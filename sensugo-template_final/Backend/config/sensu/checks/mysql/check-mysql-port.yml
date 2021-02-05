@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-port
+  namespace: default
+spec:
+  command: check-ports.rb  -p 3306
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+

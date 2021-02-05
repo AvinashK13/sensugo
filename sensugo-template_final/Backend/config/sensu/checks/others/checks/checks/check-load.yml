@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-load
+  namespace: default
+spec:
+  command: check_load  -w 80 -c 90
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - monitoring
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

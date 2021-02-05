@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-memory
+  namespace: default
+spec:
+  command: check-memory-percent.rb -w 85 -c 90
+  handlers: [email,slack]
+  high_flap_threshold: 0
+  interval: 10
+  low_flap_threshold: 0
+  publish: true
+  runtime_assets:
+  - memory-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

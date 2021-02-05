@@ -1,0 +1,17 @@
+subscriptions:
+#  - system
+#  - mongo
+#  - mysql
+#  - tomcat
+#  - nginx
+#  - fos
+#  - social
+#  - snmp
+#  - nodejs
+#  - zk
+#  - zk-consumer-process
+#  - crawler
+#  - ttl
+#  - verification
+#socket
+ 

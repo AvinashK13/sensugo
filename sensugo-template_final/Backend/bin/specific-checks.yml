@@ -1,0 +1,357 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongodb
+  namespace: default
+spec:
+  command: check-mongodb.rb -H {{ .system.hostname }}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - mongodb
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+
+
+---
+type: CheckConfig
+metadata:
+  name: met-mongodb
+  namespace: default
+spec:
+  command: metrics-mongodb.rb -h {{ .system.hostname }} 
+  handlers: [email,slack,influx-db]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - mongodb
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongo-ports
+  namespace: default
+spec:
+  command: check-ports.rb  -h {{ .system.hostname }}  -p {{.labels.mongo_port | default "27017"}}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-log-size
+  namespace: default
+spec:
+   command: check-file-size.rb -f {{.labels.log_file_path | default "/var/log/mongodb/mongod.log"}} -w {{ .labels.log_size_warn | default  "1500000000" }} -c {{ .labels.log_size_crit | default "1700000000" }}
+   handlers: [email,slack]
+   interval: 60
+   publish: true
+   runtime_assets:
+   - file
+   - sensu-ruby-runtime
+   subscriptions:
+   - mongo
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongodb-api
+  namespace: default
+spec:
+   command: check-http.rb -u {{.labels.mongo_url | default "localhost" }}  -t {{.labels.mongo_url_timeout | default "10"}} -q {{.labels.mongo_url_query | default "Pong" }}
+   handlers: [email,slack]
+   interval: 60
+   publish: true
+   runtime_assets:
+   - http
+   - sensu-ruby-runtime
+   subscriptions:
+   - mongo
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-process-mongo-migrate
+  namespace: default
+spec:
+  command: check-process.rb -p {{.labels.mongo_process_migrate | default "/opt/w4iq_2.0/copy.js" }}  -w {{.labels.warn | default "80"}} -c  {{.labels.crit | default "90"}} 
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - process-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-alive
+  namespace: default
+spec:
+  command: check-mysql-alive.rb  -h localhost  --port  {{.labels.mysql_port | default "3306"}}  -s {{.labels.mysql_socket_path | default "/var/lib/mysql/mysql.sock" }} -u {{.labels.mysql_user | default "root" }} --pass {{.labels.mysql_pass | default "root" }} -d {{.labels.mysql_database | default "test" }}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - mysql
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-api
+  namespace: default
+spec:
+  command: check-http.rb -u   {{.labels.mysql_url | default "localhost" }} -t   {{.labels.mysql_url_timeout | default "10"}} -q {{.labels.mysql_url_query | default "pong"}}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mysql-port
+  namespace: default
+spec:
+  command: check-ports.rb -h  {{ .system.hostname }} -p  {{.labels.mysql_port | default "3306"}} 
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-nginx-port
+  namespace: default
+spec:
+  command: check-ports.rb  -h {{ .system.hostname }} -p  {{.labels.nginx_port | default "80"}} 
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - nginx
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-nginx-status 
+  namespace: default
+spec:
+  command: check-nginx-status.rb
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - nginx
+  - sensu-ruby-runtime
+  subscriptions:
+  - nginx
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-nodejs-running
+  namespace: default
+spec:
+  command: check-ports.rb -h {{ .system.hostname }} -p {{.labels.nodejs_port | default "54999" }}  
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - nodejs
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-process-social
+  namespace: default
+spec:
+  command: check-process.rb -p {{.labels.process_social | default "/opt/social/src/index.js"}}  
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - process-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - social
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-snmp
+  namespace: default
+spec:
+  command: check-snmp.rb
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - snmp
+  - sensu-ruby-runtime
+  subscriptions:
+  - snmp
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-socket
+  namespace: default
+spec:
+  command: check-socat.rb -h {{ .system.hostname }}  -p {{.labels.socket_port | default "49999" }}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - socket
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-tomcat-api
+  namespace: default
+spec:
+  command: check-http.rb -u {{.labels.tomcat_api | default "localhost" }} -q {{.labels.tomcat_query | default "miliSeconds"}} 
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - tomcat
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-tomcat-port
+  namespace: default
+spec:
+  command: check-ports.rb -h {{ .system.hostname }}  -p {{.labels.tomcat_port | default "8080"}}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - tomcat
+
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-fos-api
+  namespace: default
+spec:
+  command: check-http.rb -u {{.labels.fos_url | default "localhost"}}
+  handlers: [email,slack]
+  interval: 60
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - fos
+
+
+---
+type: CheckConfig
+metadata:
+  name: met-mysql
+  namespace: default
+spec:
+  command: metrics-mysql-graphite.rb -h localhost  --port {{.labels.mysql_port | default "3306"}} -S {{.labels.mysql_socket_path | default "/var/lib/mysql/mysql.sock" }} -u {{.labels.mysql_user | default "root" }} --pass {{.labels.mysql_pass | default "CiQ34358!" }}
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - mysql
+  - sensu-ruby-runtime
+  subscriptions:
+  - mysql
+
+
+#cat << EOF | sensuctl create 
+#---
+#type: CheckConfig
+#api_version: core/v2
+#metadata:
+#  name: check-mysql-status
+#  namespace: default
+#spec:
+#  command: check-mysql-status.rb  -h {{ .name }}  -p  $MYSQL_PORT -d $MYSQL_DATABASE
+#  handlers: [email,slack]
+#  interval: 60
+#  publish: true
+#  runtime_assets:
+#  - mysql
+#  - sensu-ruby-runtime
+#  subscriptions:
+#  - mysql
+#EOF
+
+

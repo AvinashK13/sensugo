@@ -1,0 +1,18 @@
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-mongo-ports-web01
+  namespace: default
+spec:
+  command: check-ports.rb -h 10.0.1.5 -p 27017
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo-web01
+

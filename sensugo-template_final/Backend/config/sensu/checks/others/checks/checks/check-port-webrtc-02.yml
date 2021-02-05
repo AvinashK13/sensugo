@@ -1,0 +1,19 @@
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-port-webrtc-02
+  namespace: default
+spec:
+  command: check-ports.rb  -p 8447
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - port-web02
+
+

@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-netstat
+  namespace: default
+spec:
+  command: metrics-netstat-tcp.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

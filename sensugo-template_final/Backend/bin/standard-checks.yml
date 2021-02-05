@@ -1,0 +1,141 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-chrony
+  namespace: default
+spec:
+  command: check-chrony.rb --warn-offset {{.labels.chrony_warnoffset | default "10" }} --crit-offset {{.labels._chrony_critoffset | default "20"}}
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - chrony
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-cpu
+  namespace: default
+spec:
+  command: check-cpu.rb  -w {{.labels.warn | default "80"}} -c  {{.labels.crit | default "90"}}
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - cpu
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-disk-usage
+  namespace: default
+spec:
+  command: check-disk-usage.rb   -w {{.labels.warn | default "80"}} -c  {{.labels.crit | default "90"}}
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - disk-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-http-certificate
+  namespace: default
+spec:
+  command: check-https-cert.rb -u {{.labels.http_url  | default "localhost"}} -w  {{.labels.http_warn  | default "30" }} -c {{.labels.http_crit  | default "15"}}  
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - http
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-load
+  namespace: default
+spec:
+  command: check_load  -w {{.labels.warn | default "80"}} -c  {{.labels.crit | default "90"}}
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - monitoring
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-memory
+  namespace: default
+spec:
+  command: check-memory-percent.rb  -w {{.labels.warn | default "80"}} -c  {{.labels.crit | default "90"}}
+  handlers: [email,slack] 
+  high_flap_threshold: 0
+  interval: 60
+  low_flap_threshold: 0
+  publish: true
+  runtime_assets:
+  - memory-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-port
+  namespace: default
+spec:
+  command: check-ports.rb  {{.labels.ssh | default "80" }}
+  handlers: [email,slack] 
+  interval: 60
+  publish: true
+  runtime_assets:
+  - network-check
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+
+
+#---
+#type: CheckConfig
+#api_version: core/v2
+#metadata:
+#  name: check-dir-count
+#  namespace: default
+#spec:
+#  command: check-dir-count.rb -d {{.labels.path | default "/"}}  -w {{.labels.warn | default "5000"}} -c {{.labels.crit | default "6000"}}
+#  handlers: [email,slack] 
+#  interval: 60
+#  publish: true
+#  runtime_assets:
+#  - file
+#  - sensu-ruby-runtime
+#  subscriptions:
+#  - system
+
+
+

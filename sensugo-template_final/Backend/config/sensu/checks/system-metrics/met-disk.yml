@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-disk
+  namespace: default
+spec:
+  command: metrics-disk.rb
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - disk-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

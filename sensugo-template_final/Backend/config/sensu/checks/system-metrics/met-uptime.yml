@@ -1,0 +1,18 @@
+---
+type: CheckConfig
+metadata:
+  name: met-uptime
+  namespace: default
+spec:
+  command: sensu-go-uptime-check
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - uptime
+  subscriptions:
+  - system
+

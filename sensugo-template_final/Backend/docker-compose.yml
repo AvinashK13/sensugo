@@ -1,0 +1,27 @@
+---
+version: "2"
+services:
+ sensu-backend:
+    image: sensugo:backend
+    hostname: sensu-backend
+    container_name: sensugo-backend 
+    ports:
+    - 3000:3000
+    - 8383:8080
+    - 8081:8081
+    - 2379:2379
+    - 2380:2380
+    volumes:
+    - "./config/sensu:/etc/sensu"
+    - "sensu-backend-data:/var/lib/sensu/etcd"
+    env_file: ./bin/env
+    command: "sensu-backend start --log-level info"    
+    restart: always
+    networks:
+      - sensuGo
+networks:
+  sensuGo:
+    driver: bridge
+volumes:
+  sensu-backend-data:
+    driver: local 

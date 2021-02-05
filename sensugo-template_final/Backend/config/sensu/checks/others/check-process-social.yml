@@ -1,0 +1,18 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-process-social
+  namespace: default
+spec:
+  command: check-process.rb -p /opt/social/src/index.js -w85 -c90
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - process-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - social
+
+

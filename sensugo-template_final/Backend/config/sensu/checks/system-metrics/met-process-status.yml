@@ -1,0 +1,19 @@
+---
+type: CheckConfig
+metadata:
+  name: met-process-status
+  namespace: default
+spec:
+  command: metrics-process-status.rb -u root
+  handlers: [influx-db,slack,email]
+  interval: 60
+  publish: true
+  output_metric_format: graphite_plaintext
+  output_metric_handlers:
+   - influx-db
+  runtime_assets:
+  - process
+  - sensu-ruby-runtime
+  subscriptions:
+  - system
+

@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-process-mongo-migrate
+  namespace: default
+spec:
+  command: check-process.rb -p /opt/w4iq_2.0/copy.js -w85 -c90
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - process-checks
+  - sensu-ruby-runtime
+  subscriptions:
+  - mongo
+

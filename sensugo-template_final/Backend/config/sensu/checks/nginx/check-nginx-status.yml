@@ -1,0 +1,17 @@
+---
+type: CheckConfig
+api_version: core/v2
+metadata:
+  name: check-nginx-status
+  namespace: default
+spec:
+  command: check-nginx-status.rb
+  handlers: [email,slack]
+  interval: 10
+  publish: true
+  runtime_assets:
+  - nginx
+  - sensu-ruby-runtime
+  subscriptions:
+  - nginx
+
