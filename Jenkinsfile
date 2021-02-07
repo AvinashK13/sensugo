@@ -4,14 +4,14 @@ pipeline {
         stage('Source') {
             steps {
                 echo 'Getting the code from the Github...'
-                git branch: 'Docker', url: 'https://github.com/Glistensoft-Work/02-Docker.git'
+                git branch: 'master', url: 'https://github.com/AvinashK13/sensugo'
             }
         }
         stage('Build SensuGo Backend') {
             steps {
                 echo 'Build the SensuGo Backend Docker Image..'
                 sh  'cd $WORKSPACE'
-                dir("03-Docker_server/01-SensuGo-CarIQ/sensugo-template_final/Backend") {
+                dir("Backend") {
                      sh  "docker build -t sensugo:backend . "
                     }
             }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Build the SensuGo Backend Docker Image..'
                 sh  'cd $WORKSPACE'
-                dir("03-Docker_server/01-SensuGo-CarIQ/sensugo-template_final/Backend") {
+                dir("Backend") {
                      sh  "docker-compose up -d "
                     }
             }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'Build the Influxdb Image....' 
                  sh  'cd $WORKSPACE'
-                 dir("03-Docker_server/01-SensuGo-CarIQ/sensugo-template_final/Influxdb") {
+                 dir("Influxdb") {
                      sh  "docker-compose up -d "
                  }
             }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo 'Build The Grafana Image' 
                  sh  'cd $WORKSPACE'
-                 dir("03-Docker_server/01-SensuGo-CarIQ/sensugo-template_final/Grafana") {
+                 dir("Grafana") {
                      sh  "docker-compose up -d "
                  }
             }
