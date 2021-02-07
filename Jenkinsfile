@@ -11,7 +11,8 @@ pipeline {
             steps {
                 echo 'Build the SensuGo Backend Docker Image..'
                 sh  'cd $WORKSPACE'
-                dir("Backend") {
+                dir("sensugo-template_final/Backend") {
+                     sh "pwd"
                      sh  "docker build -t sensugo:backend . "
                     }
             }
@@ -20,7 +21,7 @@ pipeline {
             steps {
                 echo 'Build the SensuGo Backend Docker Image..'
                 sh  'cd $WORKSPACE'
-                dir("Backend") {
+                dir("sensugo-template_final/Backend") {
                      sh  "docker-compose up -d "
                     }
             }
@@ -29,7 +30,7 @@ pipeline {
             steps {
                 echo 'Build the Influxdb Image....' 
                  sh  'cd $WORKSPACE'
-                 dir("Influxdb") {
+                 dir("sensugo-template_final/Influxdb") {
                      sh  "docker-compose up -d "
                  }
             }
@@ -38,7 +39,7 @@ pipeline {
             steps {
                 echo 'Build The Grafana Image' 
                  sh  'cd $WORKSPACE'
-                 dir("Grafana") {
+                 dir("sensugo-template_final/Grafana") {
                      sh  "docker-compose up -d "
                  }
             }
